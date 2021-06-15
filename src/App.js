@@ -15,43 +15,44 @@ class App extends Component {
     }
   }
 
-    changeBookState=(firstbookName)=>{
 
-      this.setState({
-          books:[
-              { bookName:firstbookName, writter:"Tablig Jammat"},
-              { bookName:"Ahakame Jindigi", writter:"Mawlana Hemayet Ullah"},
-              { bookName:"Moroner Aga and Pore", writter:"Asraf Ali Thanvi"}
-          ]
-      })
+
+    changeWithInputState=(e,index)=>{
+
+        const book={...this.state.books[index]}
+        book.bookName=e.target.value ;
+        let books =[...this.state.books]
+        books[index]=book;
+        this.setState({
+            books:books ,
+        })
     }
 
-    changeWithInputState=(e)=>{
+    deleteBookState=(index)=>{
 
+      const item=[...this.state.books]
+        item.splice(index,1)
         this.setState({
-            books:[
-                { bookName:e.target.value, writter:"Tablig Jammat"},
-                { bookName:"Ahakame Jindigi", writter:"Mawlana Hemayet Ullah"},
-                { bookName:"Moroner Aga and Pore", writter:"Asraf Ali Thanvi"}
-            ]
+            books:item ,
         })
     }
 
 
   render() {
+
+
+      const books =this.state.books.map((books,index)=>{
+          return (
+              <Book bookName={books.bookName} writter={books.writter} delete={this.deleteBookState.bind(this,index)} inputName={(e)=>this.changeWithInputState(e,index)} key={index}/>
+          )
+      })
+
+
     return (
         <div className="App">
-          <h1>Book List</h1>
-
-            <button onClick={this.changeBookState.bind(this,"1991")}>Change State</button>
-
-            <input type="text" onChange={this.changeWithInputState} />
-
-          <Book bookName={this.state.books[0].bookName} writter={this.state.books[0].writter} inputName={this.changeWithInputState} />
-          <Book bookName={this.state.books[1].bookName} writter={this.state.books[1].writter} />
-          <Book bookName={this.state.books[2].bookName} writter={this.state.books[2].writter} change={this.changeBookState.bind(this,"new life")} />
-
-
+            <h1 className="Headline">BOOK List</h1>
+            
+            {books}
 
         </div>
     );
