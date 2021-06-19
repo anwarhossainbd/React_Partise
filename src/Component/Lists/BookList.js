@@ -1,11 +1,13 @@
 import React from 'react';
 import Book from "../Representational/Book";
+import book from "../../assets/book";
 
-const BookList = (props) => {
+const BookList = (props,index) => {
     return (
-            props.books.map((books,index)=>{
+            props.books.map((books)=>{
             return (
-            <Book bookName={books.bookName} writter={books.writter} selectBookHandler={()=>props.selectBookHandler(books.id)} key={index}/>
+            <Book bookName={books.bookName} writter={books.writter} deletebook={()=>props.deletebook(index)}
+                  selectBookHandler={()=>props.selectBookHandler(books.id)} key={books.id}/>
             )
         })
 

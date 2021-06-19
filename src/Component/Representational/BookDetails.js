@@ -11,8 +11,9 @@ const BookDetails = (props) => {
     return (
         <div>
 
-            {/*<h1>{props.bookdetails.bookName}</h1>*/}
-            {/*<h1>{props.bookdetails.writter}</h1>*/}
+            <h1>{props.bookdetails.bookName}</h1>
+            <h1>{props.bookdetails.writter}</h1>
+            <p>{props.bookdetails.description}</p>
 
         </div>
     );

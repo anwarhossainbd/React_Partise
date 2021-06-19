@@ -4,8 +4,9 @@ import book from "../assets/book";
 import NewBook from "./Representational/NewBook";
 
 
-import {BrowserRouter as Router, NavLink, Route, Switch} from 'react-router-dom';
+import {NavLink, Redirect, Route, Switch} from 'react-router-dom';
 import BookDetails from "./Representational/BookDetails";
+
 
 class MainComponent extends Component {
     constructor() {
@@ -25,9 +26,19 @@ class MainComponent extends Component {
         })
     }
 
+
+    deletebook=(index)=>{
+        console.log(index)
+       const item =[...this.state.books]
+           item.splice(index,1)
+        this.setState({
+            books:item
+        })
+    }
+
     render() {
 
-           const books = <BookList books={this.state.books} selectBookHandler={this.selectBookHandler}  />
+           const books = <BookList books={this.state.books} deletebook={this.deletebook} selectBookHandler={this.selectBookHandler}  />
 
 
         return (
@@ -35,17 +46,20 @@ class MainComponent extends Component {
 
                 <div className="nav-bar">
                     <ul>
-                        <li><NavLink exact to="/">Home </NavLink></li>
+                        <li><NavLink exact to="/a">Home </NavLink></li>
                         <li><NavLink exact to="/new-book">New Book </NavLink></li>
                     </ul>
                 </div>
 
-
-                <Route path="/" exact  render={()=>books} />
+                <Switch >
+                <Route path="/books" exact  render={()=>books} />
                 <Route path="/new-book" exact  component={NewBook} />
+                <Route path="/newBook/:bookName" exact  render={()=><BookDetails bookdetails={this.state.selectBook} />} />
 
+                <Redirect from="/a" to="/books"  />
 
-                <BookDetails bookdetails={this.state.selectBook} />
+                </Switch >
+
 
                 {/*{books}*/}
 
